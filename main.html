@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1, width=device-width">
   <title>Телефон</title>
   <style>
     * {
@@ -21,6 +21,8 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      width: 100vw;
+      position: fixed;
     }
 
     .verification-screen {
@@ -56,11 +58,11 @@
     }
 
     .title {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .instruction {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .country-selector {
@@ -128,7 +130,7 @@
 
     .continue-btn {
       position: fixed;
-      bottom: 20px;
+      bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
