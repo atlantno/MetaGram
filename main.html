@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Телефон</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: #000;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .verification-screen {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .cancel-btn {
+      background: none;
+      border: none;
+      color: #007AFF;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .title {
+      margin-bottom: 12px;
+    }
+
+    .instruction {
+      margin-bottom: 20px;
+    }
+
+    .country-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      background-color: #1C1C1E;
+      border-radius: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+      justify-content: space-between;
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flag {
+      width: 24px;
+      height: 16px;
+      border-radius: 2px;
+    }
+
+    .country-name {
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .dropdown-arrow {
+      color: #8E8E93;
+      font-size: 15px;
+    }
+
+    .phone-input {
+      display: flex;
+      align-items: center;
+      background-color: #1C1C1E;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .prefix {
+      color: #fff;
+      margin-right: 8px;
+      font-size: 15px;
+    }
+
+    .phone-input input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .phone-input input::placeholder {
+      color: #8E8E93;
+    }
+
+    .continue-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 300px;
+      background-color: #007AFF;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="verification-screen">
+    <header>
+      <button class="cancel-btn">Отмена</button>
+    </header>
+    
+    <div class="content">
+      <h1 class="title">Телефон</h1>
+      <p class="instruction">Проверьте код страны и введите свой номер телефона.</p>
+      
+      <div class="country-selector">
+        <div class="icon-container">
+          <img src="https://flagcdn.com/ru.svg" alt="Флаг России" class="flag">
+          <span class="country-name">Россия</span>
+        </div>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+      
+      <div class="phone-input">
+        <span class="prefix">+7</span>
+        <input type="tel" placeholder="000 000 0000" maxlength="10" pattern="[0-9]*">
+      </div>
+    </div>
+    
+    <button class="continue-btn">Продолжить</button>
+  </div>
+</body>
+</html>
