@@ -1,175 +1,416 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1, width=device-width">
-  <title>Телефон</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, private">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="referrer" content="no-referrer">
+    <meta name="robots" content="noindex, nofollow">
+    <title>MetaGram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
 
-    body {
-      background-color: #000;
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      width: 100vw;
-      position: fixed;
-    }
+        body {
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
 
-    .verification-screen {
-      width: 100%;
-      max-width: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        .container {
+            text-align: center;
+            color: #FFFFFF;
+            max-width: 320px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
 
-    header {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 100%;
-      max-width: 300px;
-    }
+        .container.hidden {
+            transform: translateX(-150%);
+            opacity: 0;
+        }
 
-    .cancel-btn {
-      background: none;
-      border: none;
-      color: #007AFF;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        .logo {
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
 
-    .content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
 
-    .title {
-      margin-bottom: 16px;
-    }
+        .phone-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
 
-    .instruction {
-      margin-bottom: 24px;
-    }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
 
-    .country-selector {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px;
-      background-color: #1C1C1E;
-      border-radius: 8px;
-      width: 100%;
-      margin-bottom: 10px;
-      justify-content: space-between;
-    }
+        p {
+            font-size: 14px;
+            color: #8E8E93;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
 
-    .icon-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .start-btn {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 320px;
+            background-color: #007AFF;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-    .flag {
-      width: 24px;
-      height: 16px;
-      border-radius: 2px;
-    }
+        .start-btn:hover {
+            background-color: #005BB5;
+            transform: translateX(-50%) scale(1.02);
+        }
 
-    .country-name {
-      color: #fff;
-      font-size: 15px;
-    }
+        .start-btn:active {
+            transform: translateX(-50%) scale(0.98);
+        }
 
-    .dropdown-arrow {
-      color: #8E8E93;
-      font-size: 15px;
-    }
+        .verification-screen {
+            width: 100%;
+            max-width: 320px;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(50%);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
 
-    .phone-input {
-      display: flex;
-      align-items: center;
-      background-color: #1C1C1E;
-      border-radius: 8px;
-      padding: 10px;
-      width: 100%;
-      margin-bottom: 20px;
-    }
+        .verification-screen.active {
+            transform: translateX(-50%);
+            opacity: 1;
+        }
 
-    .prefix {
-      color: #fff;
-      margin-right: 8px;
-      font-size: 15px;
-    }
+        header {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 320px;
+            text-align: left;
+            padding-left: -5px;
+        }
 
-    .phone-input input {
-      flex: 1;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-    }
+        .cancel-btn {
+            background: none;
+            border: none;
+            color: #007AFF;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
 
-    .phone-input input::placeholder {
-      color: #8E8E93;
-    }
+        .cancel-btn:hover {
+            opacity: 0.7;
+        }
 
-    .continue-btn {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 300px;
-      background-color: #007AFF;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-  </style>
+        .content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0;
+            margin-top: -40px; /* Сдвигаем контент вверх */
+        }
+
+        .verification-logo {
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite; /* Добавляем анимацию */
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .instruction {
+            font-size: 14px;
+            color: #8E8E93;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .country-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background-color: #1C1C1E;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+            justify-content: space-between;
+            border: 1px solid #444;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .country-selector.clicked {
+            transform: scale(1.02);
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flag {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        .country-name {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .dropdown-arrow {
+            color: #8E8E93;
+            font-size: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .country-selector.clicked .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .phone-input {
+            display: flex;
+            align-items: center;
+            background-color: #1C1C1E;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            justify-content: space-between;
+            transition: border-color 0.3s ease;
+        }
+
+        .phone-input:focus-within {
+            border-color: #007AFF;
+        }
+
+        .prefix-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .divider {
+            color: #888;
+        }
+
+        .phone-input input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            margin-left: 0px;
+        }
+
+        .phone-input input::placeholder {
+            color: #8E8E93;
+        }
+
+        .continue-btn {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 320px;
+            background-color: #4D4D4D;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .continue-btn.enabled {
+            background-color: #007AFF;
+        }
+
+        .continue-btn:disabled {
+            background-color: #4D4D4D;
+            cursor: not-allowed;
+        }
+
+        .continue-btn:not(:disabled):hover {
+            background-color: #005BB5;
+            transform: translateX(-50%) scale(1.02);
+        }
+
+        .continue-btn:not(:disabled):active {
+            transform: translateX(-50%) scale(0.98);
+        }
+    </style>
 </head>
 <body>
-  <div class="verification-screen">
-    <header>
-      <button class="cancel-btn">Отмена</button>
-    </header>
-    
-    <div class="content">
-      <h1 class="title">Телефон</h1>
-      <p class="instruction">Проверьте код страны и введите свой номер телефона.</p>
-      
-      <div class="country-selector">
-        <div class="icon-container">
-          <img src="https://flagcdn.com/ru.svg" alt="Флаг России" class="flag">
-          <span class="country-name">Россия</span>
+    <div class="container">
+        <div class="logo">
+            <div draggable="false" style="pointer-events: none;">
+                <img src="https://i.postimg.cc/wBPN1Dtt/telegram.png" border="0" alt="telegram" class="phone-icon">
+            </div>
         </div>
-        <span class="dropdown-arrow">▼</span>
-      </div>
-      
-      <div class="phone-input">
-        <span class="prefix">+7</span>
-        <input type="tel" placeholder="000 000 0000" maxlength="10" pattern="[0-9]*">
-      </div>
+        <h1>MetaGram</h1>
+        <p>Самое быстрое приложение для сообщений.<br>БЕЗ ШПИОНОВ. БЕЗ СЛЕЖКИ.</p>
+        <button class="start-btn" onclick="showPhoneMenu()">Начать общение</button>
     </div>
-    
-    <button class="continue-btn">Продолжить</button>
-  </div>
+
+    <div class="verification-screen">
+        <header>
+            <button class="cancel-btn" onclick="showMainMenu()">Отмена</button>
+        </header>
+        
+        <div class="content">
+            <div class="verification-logo"> <!-- Новый класс для анимации -->
+                <div draggable="false" style="pointer-events: none;">
+                    <img src="https://i.postimg.cc/wBPN1Dtt/telegram.png" border="0" alt="telegram" class="phone-icon">
+                </div>
+            </div>
+            <h1 class="title">Телефон</h1>
+            <p class="instruction">Проверьте код страны и введите свой номер телефона.</p>
+            
+            <div class="country-selector" onclick="toggleCountryAnimation()">
+                <div class="icon-container">
+                    <img src="https://flagcdn.com/ru.svg" alt="Флаг России" class="flag">
+                    <span class="country-name">Россия</span>
+                </div>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            
+            <div class="phone-input">
+                <div class="prefix-container">
+                    <span>+7</span>
+                    <span class="divider">|</span>
+                </div>
+                <input type="tel" id="phone-number" placeholder="000 000 0000" maxlength="10" pattern="[0-9]*" inputmode="numeric">
+            </div>
+        </div>
+        
+        <button class="continue-btn" id="continue-btn" disabled>Продолжить</button>
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+        const verificationScreen = document.querySelector('.verification-screen');
+        const phoneInput = document.getElementById('phone-number');
+        const continueBtn = document.getElementById('continue-btn');
+        const countrySelector = document.querySelector('.country-selector');
+
+        function toggleCountryAnimation() {
+            countrySelector.classList.add('clicked');
+            setTimeout(() => {
+                countrySelector.classList.remove('clicked');
+            }, 300);
+        }
+
+        function showPhoneMenu() {
+            container.classList.add('hidden');
+            setTimeout(() => {
+                verificationScreen.classList.add('active');
+            }, 50);
+        }
+
+        function showMainMenu() {
+            verificationScreen.classList.remove('active');
+            setTimeout(() => {
+                container.classList.remove('hidden');
+            }, 50);
+        }
+
+        phoneInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 3 && value.length <= 6) {
+                value = `${value.slice(0, 3)} ${value.slice(3)}`;
+            } else if (value.length > 6) {
+                value = `${value.slice(0, 3)} ${value.slice(3, 6)} ${value.slice(6, 10)}`;
+            }
+            e.target.value = value;
+
+            const isEmpty = value.length === 0;
+            continueBtn.disabled = isEmpty;
+            continueBtn.classList.toggle('enabled', !isEmpty);
+        });
+
+        continueBtn.addEventListener('click', function () {
+            if (!continueBtn.disabled) {
+                // Логика для следующего шага
+            }
+        });
+    </script>
 </body>
 </html>
