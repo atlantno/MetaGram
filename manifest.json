@@ -1,0 +1,27 @@
+{
+    "name": "MetaGram",
+    "short_name": "MetaGram",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "scope": "/",
+    "description": "Самое быстрое приложение для сообщений. БЕЗ ШПИОНОВ. БЕЗ СЛЕЖКИ.",
+    "icons": [
+        {
+            "src": "https://i.postimg.cc/wBPN1Dtt/telegram.png",
+            "sizes": "80x80",
+            "type": "image/png"
+        },
+        {
+            "src": "https://i.postimg.cc/wBPN1Dtt/telegram.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://i.postimg.cc/wBPN1Dtt/telegram.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
